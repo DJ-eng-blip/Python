@@ -1,0 +1,78 @@
+import tkinter as tk
+import turtle
+
+# Maak het hoofdvenster
+root = tk.Tk()
+root.title("Tekenprogramma met Turtle & Tkinter")
+root.geometry("800x600")
+
+# Canvas waar de turtle in tekent
+canvas = tk.Canvas(root)
+canvas.place(x=0, y=0, width=800, height=400)
+
+screen = turtle.ScrolledCanvas(canvas)
+screen.place(x=0, y=0, width=800, height=400)
+
+t = turtle.RawTurtle(screen._canvas)
+t.speed(0)
+
+# Functies
+def vooruit():
+    afstand = int(entry_afstand.get())
+    t.forward(afstand)
+
+def achteruit():
+    afstand = int(entry_afstand.get())
+    t.backward(afstand)
+
+def links():
+    graden = int(entry_graden.get())
+    t.left(graden)
+
+def rechts():
+    graden = int(entry_graden.get())
+    t.right(graden)
+
+def pen_omhoog():
+    t.penup()
+
+def pen_omlaag():
+    t.pendown()
+
+def ga_naar():
+    x = int(entry_x.get())
+    y = int(entry_y.get())
+    t.goto(x, y)
+
+def reset():
+    t.reset()
+
+def verander_kleur(kleur):
+    t.pencolor(kleur)
+    t.fillcolor(kleur)
+
+def verander_kleur_rgb():
+    r = int(entry_r.get())
+    g = int(entry_g.get())
+    b = int(entry_b.get())
+    t.pencolor((r/255, g/255, b/255))
+    t.fillcolor((r/255, g/255, b/255))
+
+def maak_cirkel():
+    straal = int(entry_cirkel.get())
+    t.circle(straal)
+
+def maak_deelcirkel():
+    straal = int(entry_cirkel.get())
+    extent = int(entry_extent.get())
+    t.circle(straal, extent)
+
+def maak_punt():
+    t.dot(10)
+
+def teken_figuur(zijden):
+    lengte = 100
+    hoek = 360 / zijden
+    for _ in range(zijden):
+        t.forward(lengte)
+        t.right(hoek)
