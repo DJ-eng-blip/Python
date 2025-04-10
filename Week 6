@@ -1,0 +1,151 @@
+import tkinter as tk
+import turtle
+
+root = tk.Tk()
+root.title("Tekenprogramma met Turtle & Tkinter")
+root.geometry("800x600")
+
+canvas = tk.Canvas(root)
+canvas.place(x=0, y=0, width=800, height=400)
+
+screen = turtle.ScrolledCanvas(canvas)
+screen.place(x=0, y=0, width=800, height=400)
+
+t = turtle.RawTurtle(screen._canvas)
+t.speed(0)
+
+def vooruit():
+    afstand = int(entry_afstand.get())
+    t.forward(afstand)
+
+def achteruit():
+    afstand = int(entry_afstand.get())
+    t.backward(afstand)
+
+def links():
+    graden = int(entry_graden.get())
+    t.left(graden)
+
+def rechts():
+    graden = int(entry_graden.get())
+    t.right(graden)
+
+def pen_omhoog():
+    t.penup()
+
+def pen_omlaag():
+    t.pendown()
+
+def ga_naar():
+    x = int(entry_x.get())
+    y = int(entry_y.get())
+    t.goto(x, y)
+
+def reset():
+    t.reset()
+
+def verander_kleur(kleur):
+    t.pencolor(kleur)
+    t.fillcolor(kleur)
+
+def verander_kleur_rgb():
+    r = int(entry_r.get())
+    g = int(entry_g.get())
+    b = int(entry_b.get())
+    t.pencolor((r/255, g/255, b/255))
+    t.fillcolor((r/255, g/255, b/255))
+
+def maak_cirkel():
+    straal = int(entry_cirkel.get())
+    t.circle(straal)
+
+def maak_deelcirkel():
+    straal = int(entry_cirkel.get())
+    extent = int(entry_extent.get())
+    t.circle(straal, extent)
+
+def maak_punt():
+    t.dot(10)
+
+def teken_figuur(zijden):
+    lengte = 100
+    hoek = 360 / zijden
+    for _ in range(zijden):
+        t.forward(lengte)
+        t.right(hoek)
+
+
+# Afstand / Graden
+tk.Label(root, text="Afstand:").place(x=10, y=420)
+entry_afstand = tk.Entry(root)
+entry_afstand.place(x=70, y=420, width=50)
+entry_afstand.insert(0, "50")
+
+tk.Label(root, text="Graden:").place(x=140, y=420)
+entry_graden = tk.Entry(root)
+entry_graden.place(x=200, y=420, width=50)
+entry_graden.insert(0, "90")
+
+tk.Button(root, text="Vooruit", command=vooruit).place(x=10, y=450)
+tk.Button(root, text="Achteruit", command=achteruit).place(x=90, y=450)
+tk.Button(root, text="Links", command=links).place(x=190, y=450)
+tk.Button(root, text="Rechts", command=rechts).place(x=250, y=450)
+
+tk.Button(root, text="Pen omhoog", command=pen_omhoog).place(x=10, y=480)
+tk.Button(root, text="Pen omlaag", command=pen_omlaag).place(x=110, y=480)
+
+tk.Label(root, text="x:").place(x=220, y=480)
+entry_x = tk.Entry(root)
+entry_x.place(x=240, y=480, width=40)
+entry_x.insert(0, "0")
+
+tk.Label(root, text="y:").place(x=290, y=480)
+entry_y = tk.Entry(root)
+entry_y.place(x=310, y=480, width=40)
+entry_y.insert(0, "0")
+
+tk.Button(root, text="Ga naar", command=ga_naar).place(x=360, y=480)
+
+tk.Button(root, text="Reset", command=reset).place(x=440, y=480)
+
+tk.Label(root, text="Kleuren:").place(x=10, y=510)
+kleuren = ["red", "green", "blue", "black", "orange", "purple"]
+for i, kleur in enumerate(kleuren):
+    tk.Button(root, bg=kleur, command=lambda k=kleur: verander_kleur(k)).place(x=80 + i*40, y=510, width=30)
+
+tk.Label(root, text="RGB:").place(x=10, y=540)
+entry_r = tk.Entry(root)
+entry_r.place(x=50, y=540, width=30)
+entry_r.insert(0, "0")
+
+entry_g = tk.Entry(root)
+entry_g.place(x=90, y=540, width=30)
+entry_g.insert(0, "0")
+
+entry_b = tk.Entry(root)
+entry_b.place(x=130, y=540, width=30)
+entry_b.insert(0, "0")
+
+tk.Button(root, text="Zet RGB kleur", command=verander_kleur_rgb).place(x=170, y=540)
+
+tk.Label(root, text="Straal:").place(x=300, y=510)
+entry_cirkel = tk.Entry(root)
+entry_cirkel.place(x=350, y=510, width=50)
+entry_cirkel.insert(0, "50")
+
+tk.Label(root, text="Boog:").place(x=410, y=510)
+entry_extent = tk.Entry(root)
+entry_extent.place(x=460, y=510, width=50)
+entry_extent.insert(0, "90")
+
+tk.Button(root, text="Cirkel", command=maak_cirkel).place(x=520, y=510)
+tk.Button(root, text="Deelcirkel", command=maak_deelcirkel).place(x=580, y=510)
+
+tk.Button(root, text="Punt", command=maak_punt).place(x=680, y=510)
+
+tk.Button(root, text="Driehoek", command=lambda: teken_figuur(3)).place(x=10, y=570)
+tk.Button(root, text="Vierkant", command=lambda: teken_figuur(4)).place(x=90, y=570)
+tk.Button(root, text="Zeshoek", command=lambda: teken_figuur(6)).place(x=180, y=570)
+tk.Button(root, text="Achthoek", command=lambda: teken_figuur(8)).place(x=270, y=570)
+
+root.mainloop()
